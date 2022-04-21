@@ -247,7 +247,7 @@ ggplot() +
   geom_abline(aes(intercept = 0, slope = 0.621, colour = "Aggregate")) +
   scale_color_brewer(palette = "Dark2", 
                      breaks = c("Kern", "Mojave", "Antelope", "Ventura", "Aggregate")) +
-  xlim(0,300) +
+  xlim(0,500) +
   ylim(0,300) +
   labs(y = "$ / Acre Foot", 
        x = "Water Reduction (AF)", 
@@ -284,14 +284,36 @@ This is 255 * 158.355 * .05 = $2019.03
 
 3) calculate the cost to each district
 This is also the same as the costs under the tax. 
-kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
-mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
-antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
-ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 
 4) There is no tax revenue generated because there is no tax. 
 
 4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?
+```{r}
+#marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)
+aggMC(455) #282.555
+```
+
+The cost of the drought, based on reducing water from 500AF to 300 AF to each irrigation district is:
+Kern: (158.355/2.29 * 158.36 * 0.05) = 547.5349
+Mojave: (158.355/3.8 * 158.36 * 0.05) * 0.05 = 329.9618
+Antelope: (158.355/2.86 * 158.36 * 0.05) * 0.05 = 438.4108
+Ventura: (158.355/1.78 * 158.36 * 0.05) = 704.4128
+We calculated these costs by calculating the cost of reducing from 755 AF to 300 AF and and then subtracting the cost of reducing from 755 AF to 500 AF from that cost. 
+
+```{r}
+#kern 
+158.355/2.29 * 158.36 * 0.05
+#mojave
+158.355/3.8 * 158.36 * 0.05
+#antelope
+158.355/2.86 * 158.36 * 0.05
+#ventura
+158.355/1.78 * 158.36 * 0.05
+```
 
 
 
