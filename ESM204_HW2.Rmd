@@ -192,36 +192,65 @@ district_costs %>%
 4) There will be no tax revenue generated because there is no tax here. 
 
 b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.
+We started by graphing the aggregate of the marginal cost curves for each water district. We did this by finding the slope of the aggregate line. 
+P = 1.78A
+**** Add in other formulas later 
+MCagg = A(1/2.29 +1/3.9 +1/2.86 + 1/1.78)
+A = .621, this is our slope of the aggregate line which we can graph using abline()
+
 1) Stringency of the policy
+The tax should be set at $158.36 for a reduction of 255 AF. 
+```{r, }
+aggMC <- function(x){
+  return(0.621*x)
+}
+aggMC(255)
+```
 
 2) calculate the total cost of meeting the target using that approach
+The total cost of the policy is the area under the aggregate line up to the reduction amount. 
+This is 255 * 158.355 * .05 = $2019.03
+
+```{r}
+255*158.355*.05
+```
 
 3) calculate the cost to each district
+The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36). 
+kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+
+```{r}
+#kern 
+158.355/2.29 * 158.36 * 0.05
+#mojave
+158.355/3.8 * 158.36 * 0.05
+#antelope
+158.355/2.86 * 158.36 * 0.05
+#ventura
+158.355/1.78 * 158.36 * 0.05
+```
 
 4) calculate the tax revenue generated.
 Whole rectangle is tax revenue 
 
-
 ```{r}
-agg_demand <- joined_demand %>% 
-  pivot_wider(names_from = Districts, values_from = water_demand)
-
-#create a function to aggregate the demand lines
-k1 <- mod_kern$coefficients*kern_baseline
-k2 <- mod_kern$coefficients
-m1 <- mod_mojave$coefficients*mojave_baseline
-m2 <- mod_mojave$coefficients
-a1 <- mod_antelope$coefficients*antelope_baseline
-a2 <- mod_antelope$coefficients
-v1 <- mod_ventura$coefficients*ventura_baseline
-v2 <- mod_ventura$coefficients
-
-aggD <- function(k1, k2, m1, m2, a1, a2, v1, v2, P) {
-  demand_agg = k1/k2 + m1/m2 + a1/a2 + v1/v2 - 1/k2*P - 1/m2*P - 1/a2*P - 1/v2*P
-  return(demand_agg)
-}
-
-demand_agg <- tibble(aggD(k1, k2, m1, m2, a1, a2, v1, v2, P = c(0:630)))
+ggplot() +
+  geom_line(data = kern_data, aes(x=Reduction, y=predicted_MC, color = "Kern")) +
+  geom_line(data = mojave_data, aes(x=Reduction, y=predicted_MC, color = "Mojave")) +
+  geom_line(data = antelope_data, aes(x=Reduction, y=predicted_MC, color = "Antelope")) +
+  geom_line(data = ventura_data, aes(x=Reduction, y=predicted_MC, color = "Ventura")) +
+  geom_abline(aes(intercept = 0, slope = 0.621, colour = "Aggregate")) +
+  scale_color_brewer(palette = "Dark2", 
+                     breaks = c("Kern", "Mojave", "Antelope", "Ventura", "Aggregate")) +
+  xlim(0,300) +
+  ylim(0,300) +
+  labs(y = "$ / Acre Foot", 
+       x = "Water Reduction (AF)", 
+       title = "Marginal Cost of Water Reduction",
+       col = "District") 
 ```
 
 c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
