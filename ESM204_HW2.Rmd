@@ -46,10 +46,13 @@ ggplot() +
   labs(y = "$ / Acre Foot", 
        x = "Water Reduction (AF)", 
        title = "Marginal Cost of Water Reduction")
+```
 
+```{r}
+###linear regression and demand for each district 
 ## Kern
 mod_kern <- lm(MC_Kern ~ 0 + Reduction, data = water_curves) #regression line fit
-summary(mod_kern)
+summary(mod_kern) # equation from this is P = 2.29A
 kern_baseline <- 150
 kern_data <- tibble(Reduction = 0:150) # creates a vector of equally spaced numbers
 predicted_MC <- predict(mod_kern, newdata = kern_data)
@@ -59,17 +62,16 @@ kern_data <- kern_data %>%
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Kern)) +
   geom_point(alpha = 0.5) +
   geom_line(data = kern_data, aes(x=Reduction, y=predicted_MC))
-#Define demand or use as Baseline (no policy) - Abatement
-##### We use the data we already have, and mutate
+#Define demand by subtracting the reduction from the baseline - E0-E
 kern_data <- kern_data %>% 
   mutate(water_demand = kern_baseline - Reduction)
-# Plot the demand
+# Plot the demand - P = 343.5 - 2.29Q
 ggplot(kern_data, aes(x = water_demand, y = predicted_MC)) +
   geom_line() + 
   labs(x = 'water demand (AF)', y = '$/AF')
 
 ##Mojave
-mod_mojave <- lm(MC_Mojave ~ 0 + Reduction, data = water_curves)
+mod_mojave <- lm(MC_Mojave ~ 0 + Reduction, data = water_curves) #equation - P = 3.8A
 mojave_baseline <- 140
 mojave_data <- tibble(Reduction = 0:140) # creates a vector of equally spaced numbers
 predicted_MC <- predict(mod_mojave, newdata = mojave_data)
@@ -79,17 +81,15 @@ mojave_data <- mojave_data %>%
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Mojave)) +
   geom_point(alpha = 0.5) +
   geom_line(data = mojave_data, aes(x=Reduction, y=predicted_MC))
-#Define demand or use as Baseline (no policy) - Abatement
-##### We use the data we already have, and mutate
 mojave_data <- mojave_data %>% 
-  mutate(water_demand = mojave_baseline - Reduction)
-# Plot the demand
+  mutate(water_demand = mojave_baseline - Reduction) # E0 - E
+# Plot the demand - P = 532 - 3.8Q
 ggplot(mojave_data, aes(x = water_demand, y = predicted_MC)) +
   geom_line() + 
   labs(x = 'water demand', y = '$/AF')
 
 ##Antelope
-mod_antelope <- lm(MC_Antelope ~ 0 + Reduction, data = water_curves)
+mod_antelope <- lm(MC_Antelope ~ 0 + Reduction, data = water_curves) #equation - P = 2.86A
 antelope_baseline <- 220
 antelope_data <- tibble(Reduction = 0:220) # creates a vector of equally spaced numbers
 predicted_MC <- predict(mod_antelope, newdata = antelope_data)
@@ -99,17 +99,15 @@ antelope_data <- antelope_data %>%
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Antelope)) +
   geom_point(alpha = 0.5) +
   geom_line(data = antelope_data, aes(x=Reduction, y=predicted_MC))
-#Define demand or use as Baseline (no policy) - Abatement
-##### We use the data we already have, and mutate
-antelope_data <- antelope_data %>% 
-  mutate(water_demand = antelope_baseline - Reduction)
-# Plot the demand
+antelope_data <- antelope_data %>%
+  mutate(water_demand = antelope_baseline - Reduction) # E0 - E
+# Plot the demand - P = 629.2 - 2.86Q
 ggplot(antelope_data, aes(x = water_demand, y = predicted_MC)) +
   geom_line() + 
   labs(x = 'water demand (AF)', y = '$/AF')
 
-##Ventrua 
-mod_ventura <- lm(MC_Ventura ~ 0 + Reduction, data = water_curves)
+##Ventura 
+mod_ventura <- lm(MC_Ventura ~ 0 + Reduction, data = water_curves) #equation - P = 1.78A
 ventura_baseline <- 245
 ventura_data <- tibble(Reduction = 0:245) # creates a vector of equally spaced numbers
 predicted_MC <- predict(mod_ventura, newdata = ventura_data)
@@ -119,16 +117,15 @@ ventura_data <- ventura_data %>%
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Ventura)) +
   geom_point(alpha = 0.5) +
   geom_line(data = ventura_data, aes(x=Reduction, y=predicted_MC))
-#Define demand or use as Baseline (no policy) - Abatement
-##### We use the data we already have, and mutate
 ventura_data <- ventura_data %>% 
-  mutate(water_demand = ventura_baseline - Reduction)
-# Plot the demand
+  mutate(water_demand = ventura_baseline - Reduction) # E0-E
+# Plot the demand - P = 436.1 - 1.78Q
 ggplot(ventura_data, aes(x = water_demand, y = predicted_MC)) +
   geom_line() + 
   labs(x = 'water demand (AF)', y = '$/AF')
 ```
-```{r}
+
+```{r, eval=FALSE}
 #regression lines and marginal cost plots 
 ggplot() +
   geom_point(data = water_curves, aes(x = Reduction, y = MC_Kern, color = "Kern")) +
@@ -151,8 +148,7 @@ ggplot() +
 joined_demand <- bind_rows('Mojave' = mojave_data, 
                            'Kern' = kern_data, 
                            'Antelope' = antelope_data, 
-                           'Ventura' = ventura_data, 
-                           'Aggregate' = agg_data, .id = 'Districts')
+                           'Ventura' = ventura_data, .id = 'Districts')
 ### plot the demand curves
 ggplot(data = joined_demand, aes(x = water_demand, y = predicted_MC, color = Districts)) + 
   geom_line() +
@@ -162,25 +158,16 @@ ggplot(data = joined_demand, aes(x = water_demand, y = predicted_MC, color = Dis
 ```
 
 3. Here you will analyze three alternative policies for reducing water use among these irrigation districts. In total, these irrigation districts will need to reduce water consumption from the current 755 AF down to 500 AF. For each intervention listed below, perform the following calculations: (1) calculate the stringency of the policy (defined below for each intervention) required to achieve the 500 AF target, (2) calculate the total cost of meeting the target using that approach, (3) calculate the cost to each district, and (4) calculate the tax revenue generated.
+
 a. Cap without trade. Reduce each district’s water use by the same fraction (e.g., 1/3 of current baseline use), so the 500 AF target is met. Trade is not allowed. Stringency is defined as the magnitude of the fraction.
-b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.
-c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
-#### 3A, B, C
-
-#All hinge on the demand curve. Once you have the final colorful plot you can tackle 3 A, B, and C.
-
-### 3A
-#We want a single number. 
-
+1) Stringency of the policy 
+755-500 = 255.
+p(150) + p(140)+ p(220) + p(245) = 255
+p = 0.338 
+2)Total cost of meeting the target: $2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47
+3)Cost to each district:
 ```{r}
-baseline = c(150, 140, 220, 245)
-# A single fraction multiplied by these numbers that sum to 755-500 = 255. We want to deduct by a total of 255. 
-# Use wolfram alpha to solve: p * 150 + p * 140 + p * 220 + p * 245 = 255
-# p = 0.338
-
-
 # A function to compute the cost for a districts abatement given the abatement number
-
 quantity_abate = 50
 lm_mod = mod_kern
 # defining the function
@@ -189,18 +176,56 @@ calc_cost <- function(lm_mod, quantity_abate) {
   total_cost = 0.5 * quantity_abate * estimated_cost
   return(total_cost[[1]])
 }
-
-# Now with the above code we can answer questions like: What is the total cost if Kern were able to abate 117 units?
-calc_cost(mod_kern, quantity_abate = 117)
-# we can fill in different numbers for the 117, and get the total coast answer
-
 # Q3a, kern abated 0.338 * 150 = 50.7 units
-calc_cost(mod_kern, quantity_abate = 50.7) 
-calc_cost(mod_mojave, quantity_abate = 47.43) 
-calc_cost(mod_antelope, quantity_abate = 74.36) 
-calc_cost(mod_ventura, quantity_abate = 82.81) 
-# these calculations are the same thing as if we calculated the area under the curve up to 50.7 by using the area of a triangle. The answer we got here was 2938.55
+kern_cost <- calc_cost(mod_kern, quantity_abate = 50.7) 
+mojave_cost <- calc_cost(mod_mojave, quantity_abate = 47.43) 
+antelope_cost <- calc_cost(mod_antelope, quantity_abate = 74.36) 
+ventura_cost <- calc_cost(mod_ventura, quantity_abate = 82.81) #these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
+
+district_costs <- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) #put costs into nice table
+district_costs %>% 
+  kableExtra::kable(col.names = c("Kern",
+                                  "Mojave", "Antelope", "Ventura")) %>% 
+   kable_styling(full_width = FALSE)
 ```
+
+4) There will be no tax revenue generated because there is no tax here. 
+
+b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.
+1) Stringency of the policy
+
+2) calculate the total cost of meeting the target using that approach
+
+3) calculate the cost to each district
+
+4) calculate the tax revenue generated.
+Whole rectangle is tax revenue 
+
+
+```{r}
+agg_demand <- joined_demand %>% 
+  pivot_wider(names_from = Districts, values_from = water_demand)
+
+#create a function to aggregate the demand lines
+k1 <- mod_kern$coefficients*kern_baseline
+k2 <- mod_kern$coefficients
+m1 <- mod_mojave$coefficients*mojave_baseline
+m2 <- mod_mojave$coefficients
+a1 <- mod_antelope$coefficients*antelope_baseline
+a2 <- mod_antelope$coefficients
+v1 <- mod_ventura$coefficients*ventura_baseline
+v2 <- mod_ventura$coefficients
+
+aggD <- function(k1, k2, m1, m2, a1, a2, v1, v2, P) {
+  demand_agg = k1/k2 + m1/m2 + a1/a2 + v1/v2 - 1/k2*P - 1/m2*P - 1/a2*P - 1/v2*P
+  return(demand_agg)
+}
+
+demand_agg <- tibble(aggD(k1, k2, m1, m2, a1, a2, v1, v2, P = c(0:630)))
+```
+
+c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
+
 
 4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))2?
 
