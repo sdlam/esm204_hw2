@@ -238,7 +238,9 @@ ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 ```
 
 4) calculate the tax revenue generated.
-Whole rectangle is tax revenue 
+The tax revenue generated is the entire area of the reduction times the amount of the tax.
+
+Tax revenue = $40381.80
 
 ```{r}
 ggplot() +
@@ -249,7 +251,7 @@ ggplot() +
   geom_abline(aes(intercept = 0, slope = 0.621, colour = "Aggregate")) +
   scale_color_brewer(palette = "Dark2", 
                      breaks = c("Kern", "Mojave", "Antelope", "Ventura", "Aggregate")) +
-  xlim(0,300) +
+  xlim(0,500) +
   ylim(0,300) +
   labs(y = "$ / Acre Foot", 
        x = "Water Reduction (AF)", 
@@ -261,9 +263,65 @@ ggplot() +
 ```
 
 c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
+1) Stringency of the policy
+Kern: (158.355/2.29)/kern_baseline = 0.4610044
+Mojave: (158.355/3.8)/mojave_baseline = 0.2976598
+Antelope: (158.355/2.86)/antelope_baseline = 0.2516767
+Ventura: (158.355/1.78)/ventura_baseline = 0.3631163
 
+```{r}
+#kern
+(158.355/2.29)/kern_baseline #=0.4610044
+#mojave
+(158.355/3.8)/mojave_baseline #0.2976598
+#antelope
+(158.355/2.86)/antelope_baseline #0.2516767
+#ventura
+(158.355/1.78)/ventura_baseline #0.3631163
+```
 
-4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))2?
+kern: b - (158.355/2.29) / b * 158.36 * 0.05 = 547.5349
+mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+
+2) calculate the total cost of meeting the target using that approach
+The total cost of the policy is the same as for the tax because according to the equalmarginal principle, the districts will settle on the least coast way to achieve the reduction amount, which is where we set the tax. 
+This is 255 * 158.355 * .05 = $2019.03
+
+3) calculate the cost to each district
+This is also the same as the costs under the tax. 
+Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+
+4) There is no tax revenue generated because there is no tax. 
+
+4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?
+```{r}
+#marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)
+aggMC(455) #282.555
+```
+
+The cost of the drought, based on reducing water from 500AF to 300 AF to each irrigation district is:
+Kern: 
+Mojave: 
+Antelope: 
+Ventura: 
+We calculated these costs by calculating the cost of reducing from 755 AF to 300 AF and and then subtracting the cost of reducing from 755 AF to 500 AF from that cost. 
+
+```{r}
+#costs to each district 
+#kern 
+(282.555/2.29 * 282.555 * 0.05) - (158.355/2.29 * 158.36 * 0.05) #1195.638
+#mojave
+(282.555/3.8 * 282.555 * 0.05) - (158.355/3.8 * 158.36 * 0.05) #720.5293
+#antelope
+(282.555/2.86 * 282.555 * 0.05) - (158.355/2.86 * 158.36 * 0.05) #957.3467
+#ventura
+(282.555/1.78 * 282.555 * 0.05) - (158.355/1.78 * 158.36 * 0.05) #1538.209
+```
 
 
 
