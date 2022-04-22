@@ -231,6 +231,10 @@ ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 158.355/2.86 * 158.36 * 0.05
 #ventura
 158.355/1.78 * 158.36 * 0.05
+
+#Summing Q's
+547.5349 +  329.9618 +  438.4108 + 704.4129 
+2020.32
 ```
 
 4) calculate the tax revenue generated.
@@ -251,6 +255,9 @@ ggplot() +
        x = "Water Reduction (AF)", 
        title = "Marginal Cost of Water Reduction",
        col = "District") 
+
+#Tax Revenue: 
+255 * 158.36
 ```
 
 c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
