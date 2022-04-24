@@ -265,27 +265,42 @@ aggMC(255)
 ```
 
   
-  **3) calculate the cost to each district**
+  **3) calculate the cost to each district** I think we need to change this too 
   
   The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36). 
   
-  Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+  Kern: 
+  Cost of tax * amount of water: (150 - (158.355/2.29)) * 158.36 = 12,803.30
+  Cost of abatement: 158.355/2.29 * 158.36 * 0.5 = 5,475.349
   
-  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+  Mojave: 
+  Cost of tax * amount of water: (140 - (158.355/3.8)) * 158.36 = 15,571.16
+  Cost of abatement: 158.355/3.8 * 158.36 * 0.5  = 3,299.618
   
-  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+  Antelope: 
+  Cost of tax * amount of water: (220 - (158.355/2.86)) * 158.36 = 26,070.98
+  Cost of abatement: 158.355/2.86 * 158.36 * 0.5 = 4,384.108
   
-  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  Ventura: 
+  Cost of tax * amount of water: (245 - (158.355/1.78)) * 158.36 = 24,709.94
+  Cost of abatement: 158.355/1.78 * 158.36 * 0.5 = 7,044.129
 
 ```{r, results='hide'}
 #kern 
-158.355/2.29 * 158.36 * 0.05
+158.355/2.29 * 158.36 * 0.5
+(150 - (158.355/2.29)) * 158.36
+
 #mojave
-158.355/3.8 * 158.36 * 0.05
+158.355/3.8 * 158.36 * 0.5
+(140 - (158.355/3.8)) * 158.36
+
 #antelope
-158.355/2.86 * 158.36 * 0.05
+158.355/2.86 * 158.36 * 0.5
+(220 - (158.355/2.86)) * 158.36
+
 #ventura
-158.355/1.78 * 158.36 * 0.05
+158.355/1.78 * 158.36 * 0.5
+(245 - (158.355/1.78)) * 158.36
 
 #Summing Q's
 547.5349 +  329.9618 +  438.4108 + 704.4129 
