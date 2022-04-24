@@ -256,12 +256,12 @@ aggMC(255)
   
   **2) calculate the total cost of meeting the target using that approach**
   
-  The total cost of the policy is the area under the aggregate line up to the reduction amount. 
+  The total cost of the policy is the T* x water use, plug the cost of reduction which is the area under the aggregate line up to the reduction amount. 
   
-  This is 255 * 158.355 * .05 = $2019.03
+  This is (158.355*500) + (255 * 158.355 * .5) = $99,367.76
 
 ```{r, results='hide'}
-255*158.355*.05
+(255*158.355*.5) + (158.355*500)
 ```
 
   
@@ -451,12 +451,12 @@ aggMC(455) #282.555
   
   p(150) + p(140)+ p(220) + p(245) = 455  
   
-  p = 0.338   
+  ##p = 0.338   
 
   
   **2) Total cost of meeting the target:** 
   
-  $2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47  
+  ##$2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47  
 
   
   **3) Cost to each district:**
@@ -474,9 +474,11 @@ calc_cost <- function(lm_mod, quantity_abate) {
 kern_cost <- calc_cost(mod_kern, quantity_abate = 50.7) 
 mojave_cost <- calc_cost(mod_mojave, quantity_abate = 47.43) 
 antelope_cost <- calc_cost(mod_antelope, quantity_abate = 74.36) 
-ventura_cost <- calc_cost(mod_ventura, quantity_abate = 82.81) #these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
+ventura_cost <- calc_cost(mod_ventura, quantity_abate = 82.81) 
+#these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
 
-district_costs <- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) #put costs into nice table
+district_costs <- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) 
+#put costs into nice table
 district_costs %>% 
   kableExtra::kable(col.names = c("Kern",
                                   "Mojave", "Antelope", "Ventura")) %>% 

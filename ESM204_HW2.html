@@ -405,9 +405,9 @@ aggMC(455) #282.555</code></pre>
 <p><strong>1) Stringency of the policy</strong></p>
 <p>755-300 = 455.</p>
 <p>p(150) + p(140)+ p(220) + p(245) = 455</p>
-<p>p = 0.338</p>
+<p>##p = 0.338</p>
 <p><strong>2) Total cost of meeting the target:</strong></p>
-<p>$2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47</p>
+<p>##$2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47</p>
 <p><strong>3) Cost to each district:</strong></p>
 <pre class="r"><code># A function to compute the cost for a districts abatement given the abatement number
 quantity_abate = 50
@@ -422,9 +422,11 @@ calc_cost &lt;- function(lm_mod, quantity_abate) {
 kern_cost &lt;- calc_cost(mod_kern, quantity_abate = 50.7) 
 mojave_cost &lt;- calc_cost(mod_mojave, quantity_abate = 47.43) 
 antelope_cost &lt;- calc_cost(mod_antelope, quantity_abate = 74.36) 
-ventura_cost &lt;- calc_cost(mod_ventura, quantity_abate = 82.81) #these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
+ventura_cost &lt;- calc_cost(mod_ventura, quantity_abate = 82.81) 
+#these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
 
-district_costs &lt;- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) #put costs into nice table
+district_costs &lt;- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) 
+#put costs into nice table
 district_costs %&gt;% 
   kableExtra::kable(col.names = c(&quot;Kern&quot;,
                                   &quot;Mojave&quot;, &quot;Antelope&quot;, &quot;Ventura&quot;)) %&gt;% 
