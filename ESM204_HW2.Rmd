@@ -567,16 +567,6 @@ aggMC(455)
 #ventura
 (282.555/1.78)/ventura_baseline #0.6479133
 ```
-
-  
-  Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349
-  
-  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.5 = 329.9618
-  
-  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.5 = 438.4108
-  
-  Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
-
   
   **2) calculate the total cost of meeting the target using that approach**
   
@@ -595,14 +585,6 @@ aggMC(455)
   Antelope: 158.355/2.86 * 158.36 * 0.5 = 438.4108
   
   Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
-  
-  **4) Tax Revenue:** 
-  
-  There is no tax revenue generated because there is no tax.
-
-
-
-
 
 
 
