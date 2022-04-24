@@ -1,11 +1,13 @@
 ---
 title: "ESM204 HW2"
-author: "Sarah Lam"
-date: "4/20/2022"
-output: html_document
+author: "Sarah Lam and Logan Ossentjuk"
+output: 
+  html_document: 
+    code_folding: hide
+    theme: cerulean
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(here)
 library(effsize)
@@ -18,14 +20,14 @@ library(broom)
 water_curves <- read_csv("Water_Districts.csv")
 ```
  
-### ESM 204, Homework #2 Simulating a Water Market
+# ESM 204, Homework #2 Simulating a Water Market {.tabset .tabset-fade}
 Agricultural water is managed by irrigation districts and is increasingly scarce. To conserve water and reduce costs, four irrigation districts are considering developing a water market, in which water rights would be traded across the districts. In this homework you will conduct data analysis, simulations, and policy analysis to help inform the development of the water market. The dataset for this assignment is available in the file “Water_Districts.csv”, available on Gauchospace. The dataset contains estimates of the marginal cost of reducing water use in each of the four irrigation districts (Kern, Mojave, Antelope, and Ventura) for different levels of reduction (in Acre Feet). A few notes:
 - Current (i.e. baseline) water use in these districts1 is: Kern = 150 AF, Mojave = 140 AF, Antelope = 220 AF, and Ventura = 245 AF. 
 - Prices are in $/Acre Foot and quantities are in Acre Feet (AF). Please write a concise report that addresses all of the points below.
 
-1. For each irrigation district, plot the marginal abatement cost data (from the data provided) and estimate a linear regression model with zero intercept. These estimated linear regressions will be your estimates of the marginal abatement cost curve (one for each irrigation district), which you will use for the remainder of this analysis.
+**1. For each irrigation district, plot the marginal abatement cost data (from the data provided) and estimate a linear regression model with zero intercept. These estimated linear regressions will be your estimates of the marginal abatement cost curve (one for each irrigation district), which you will use for the remainder of this analysis.**
 .
-```{r}
+```{r, include=FALSE}
 #individual plots
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Kern)) +
   geom_point(alpha = 0.5)
@@ -48,7 +50,7 @@ ggplot() +
        title = "Marginal Cost of Water Reduction")
 ```
 
-```{r}
+```{r, include=FALSE}
 ###linear regression and demand for each district 
 ## Kern
 mod_kern <- lm(MC_Kern ~ 0 + Reduction, data = water_curves) #regression line fit
@@ -58,16 +60,18 @@ kern_data <- tibble(Reduction = 0:150) # creates a vector of equally spaced numb
 predicted_MC <- predict(mod_kern, newdata = kern_data)
 kern_data <- kern_data %>% 
   mutate(predicted_MC = predicted_MC)
+
+
 # Plotting with predicted line
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Kern)) +
   geom_point(alpha = 0.5) +
   geom_line(data = kern_data, aes(x=Reduction, y=predicted_MC))
 #Define demand by subtracting the reduction from the baseline - E0-E
-kern_data <- kern_data %>% 
+kern_data <- kern_data %>%
   mutate(water_demand = kern_baseline - Reduction)
 # Plot the demand - P = 343.5 - 2.29Q
 ggplot(kern_data, aes(x = water_demand, y = predicted_MC)) +
-  geom_line() + 
+  geom_line() +
   labs(x = 'water demand (AF)', y = '$/AF')
 
 ##Mojave
@@ -77,15 +81,16 @@ mojave_data <- tibble(Reduction = 0:140) # creates a vector of equally spaced nu
 predicted_MC <- predict(mod_mojave, newdata = mojave_data)
 mojave_data <- mojave_data %>% 
   mutate(predicted_MC = predicted_MC)
+
 # Plotting with predicted line
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Mojave)) +
   geom_point(alpha = 0.5) +
   geom_line(data = mojave_data, aes(x=Reduction, y=predicted_MC))
-mojave_data <- mojave_data %>% 
+mojave_data <- mojave_data %>%
   mutate(water_demand = mojave_baseline - Reduction) # E0 - E
 # Plot the demand - P = 532 - 3.8Q
 ggplot(mojave_data, aes(x = water_demand, y = predicted_MC)) +
-  geom_line() + 
+  geom_line() +
   labs(x = 'water demand', y = '$/AF')
 
 ##Antelope
@@ -95,6 +100,7 @@ antelope_data <- tibble(Reduction = 0:220) # creates a vector of equally spaced 
 predicted_MC <- predict(mod_antelope, newdata = antelope_data)
 antelope_data <- antelope_data %>% 
   mutate(predicted_MC = predicted_MC)
+
 # Plotting with predicted line
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Antelope)) +
   geom_point(alpha = 0.5) +
@@ -103,7 +109,7 @@ antelope_data <- antelope_data %>%
   mutate(water_demand = antelope_baseline - Reduction) # E0 - E
 # Plot the demand - P = 629.2 - 2.86Q
 ggplot(antelope_data, aes(x = water_demand, y = predicted_MC)) +
-  geom_line() + 
+  geom_line() +
   labs(x = 'water demand (AF)', y = '$/AF')
 
 ##Ventura 
@@ -113,19 +119,22 @@ ventura_data <- tibble(Reduction = 0:245) # creates a vector of equally spaced n
 predicted_MC <- predict(mod_ventura, newdata = ventura_data)
 ventura_data <- ventura_data %>% 
   mutate(predicted_MC = predicted_MC)
+
 # Plotting with predicted line
 ggplot(data = water_curves, aes(x = Reduction, y = MC_Ventura)) +
   geom_point(alpha = 0.5) +
   geom_line(data = ventura_data, aes(x=Reduction, y=predicted_MC))
-ventura_data <- ventura_data %>% 
-  mutate(water_demand = ventura_baseline - Reduction) # E0-E
+
+ ventura_data <- ventura_data %>% 
+   mutate(water_demand = ventura_baseline - Reduction) # E0-E
+
 # Plot the demand - P = 436.1 - 1.78Q
 ggplot(ventura_data, aes(x = water_demand, y = predicted_MC)) +
-  geom_line() + 
+  geom_line() +
   labs(x = 'water demand (AF)', y = '$/AF')
 ```
 
-```{r, eval=FALSE}
+```{r}
 #regression lines and marginal cost plots 
 ggplot() +
   geom_point(data = water_curves, aes(x = Reduction, y = MC_Kern, color = "Kern")) +
@@ -138,10 +147,10 @@ ggplot() +
   geom_line(data = ventura_data, aes(x=Reduction, y=predicted_MC, color = "Ventura")) +
   labs(y = "$ / Acre Foot", 
        x = "Water Reduction (AF)", 
-       title = "Marginal Cost of Water Reduction")
+       title = "Marginal Cost of Water Reduction") 
 ```
 
-2. Using your estimated marginal abatement cost curves, derive each district’s demand curve for water. In other words, how much would each district be willing to pay for the right to use the first AF of water, second AF, etc.? Plot each district’s demand curve on a single graph. Which sector is willing to pay the most for the first AF of water?
+**2. Using your estimated marginal abatement cost curves, derive each district’s demand curve for water. In other words, how much would each district be willing to pay for the right to use the first AF of water, second AF, etc.? Plot each district’s demand curve on a single graph. Which sector is willing to pay the most for the first AF of water?**
 
 ```{r}
 #### We want the data for all districts to be in one plot now
@@ -156,16 +165,34 @@ ggplot(data = joined_demand, aes(x = water_demand, y = predicted_MC, color = Dis
        x = "Water Demand (AF)", 
        y = "$/AF")
 ```
+  
+  Antelope has the highest willingness to pay for the first AF of water. 
 
-3. Here you will analyze three alternative policies for reducing water use among these irrigation districts. In total, these irrigation districts will need to reduce water consumption from the current 755 AF down to 500 AF. For each intervention listed below, perform the following calculations: (1) calculate the stringency of the policy (defined below for each intervention) required to achieve the 500 AF target, (2) calculate the total cost of meeting the target using that approach, (3) calculate the cost to each district, and (4) calculate the tax revenue generated.
 
-a. Cap without trade. Reduce each district’s water use by the same fraction (e.g., 1/3 of current baseline use), so the 500 AF target is met. Trade is not allowed. Stringency is defined as the magnitude of the fraction.
-1) Stringency of the policy 
-755-500 = 255.
-p(150) + p(140)+ p(220) + p(245) = 255
-p = 0.338 
-2)Total cost of meeting the target: $2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47
-3)Cost to each district:
+  
+  
+  **3. Here you will analyze three alternative policies for reducing water use among these irrigation districts. In total, these irrigation districts will need to reduce water consumption from the current 755 AF down to 500 AF. For each intervention listed below, perform the following calculations: (1) calculate the stringency of the policy (defined below for each intervention) required to achieve the 500 AF target, (2) calculate the total cost of meeting the target using that approach, (3) calculate the cost to each district, and (4) calculate the tax revenue generated.**
+
+
+  
+  **a. Cap without trade. Reduce each district’s water use by the same fraction (e.g., 1/3 of current baseline use), so the 500 AF target is met. Trade is not allowed. Stringency is defined as the magnitude of the fraction.**
+
+  
+  **1) Stringency of the policy** 
+
+  755-500 = 255.  
+  
+  p(150) + p(140)+ p(220) + p(245) = 255  
+  
+  p = 0.338   
+
+  
+  **2) Total cost of meeting the target:** 
+  
+  $2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47  
+
+  
+  **3) Cost to each district:**
 ```{r}
 # A function to compute the cost for a districts abatement given the abatement number
 quantity_abate = 50
@@ -189,40 +216,60 @@ district_costs %>%
    kable_styling(full_width = FALSE)
 ```
 
-4) There will be no tax revenue generated because there is no tax here. 
+  
+  4) There will be no tax revenue generated because there is no tax here. 
 
-b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.
-We started by graphing the aggregate of the marginal cost curves for each water district. We did this by finding the slope of the aggregate line. 
-P = 1.78A
-**** Add in other formulas later 
-MCagg = A(1/2.29 +1/3.9 +1/2.86 + 1/1.78)
-A = .621, this is our slope of the aggregate line which we can graph using abline()
+  
+  b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.  
 
-1) Stringency of the policy
-The tax should be set at $158.36 for a reduction of 255 AF. 
-```{r, }
+  
+  We started by graphing the aggregate of the marginal cost curves for each water district. We did this by finding the slope of the aggregate line.   
+
+  
+  P = 1.78A 
+**Add in other formulas later**
+
+  
+  MCagg = A(1/2.29 +1/3.9 +1/2.86 + 1/1.78)
+  
+  A = .621, this is our slope of the aggregate line which we can graph using abline()
+
+  
+  **1) Stringency of the policy**
+  
+  The tax should be set at $158.36 for a reduction of 255 AF. 
+```{r, results='hide'}
 aggMC <- function(x){
   return(0.621*x)
 }
 aggMC(255)
 ```
 
-2) calculate the total cost of meeting the target using that approach
-The total cost of the policy is the area under the aggregate line up to the reduction amount. 
-This is 255 * 158.355 * .05 = $2019.03
+  
+  **2) calculate the total cost of meeting the target using that approach**
+  
+  The total cost of the policy is the area under the aggregate line up to the reduction amount. 
+  
+  This is 255 * 158.355 * .05 = $2019.03
 
-```{r}
+```{r, results='hide'}
 255*158.355*.05
 ```
 
-3) calculate the cost to each district
-The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36). 
-kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
-mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
-antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
-ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  
+  **3) calculate the cost to each district**
+  
+  The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36). 
+  
+  Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+  
+  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+  
+  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+  
+  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 
-```{r}
+```{r, results='hide'}
 #kern 
 158.355/2.29 * 158.36 * 0.05
 #mojave
@@ -237,10 +284,12 @@ ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 2020.32
 ```
 
-4) calculate the tax revenue generated.
-The tax revenue generated is the entire area of the reduction times the amount of the tax.
+  
+  **4) Calculate the tax revenue generated.**
+  
+  The tax revenue generated is the entire area of the reduction times the amount of the tax.
 
-Tax revenue = $40381.80
+  Tax revenue = $40381.80
 
 ```{r}
 ggplot() +
@@ -259,17 +308,23 @@ ggplot() +
        col = "District") 
 
 #Tax Revenue: 
-255 * 158.36
+# 255 * 158.36
 ```
 
-c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).
-1) Stringency of the policy
-Kern: (158.355/2.29)/kern_baseline = 0.4610044
-Mojave: (158.355/3.8)/mojave_baseline = 0.2976598
-Antelope: (158.355/2.86)/antelope_baseline = 0.2516767
-Ventura: (158.355/1.78)/ventura_baseline = 0.3631163
+  
+  **c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).**
+  
+  **1) Stringency of the policy**
+  
+  Kern: (158.355/2.29)/kern_baseline = 0.4610044
+  
+  Mojave: (158.355/3.8)/mojave_baseline = 0.2976598
+  
+  Antelope: (158.355/2.86)/antelope_baseline = 0.2516767
+  
+  Ventura: (158.355/1.78)/ventura_baseline = 0.3631163
 
-```{r}
+```{r, results='hide'}
 #kern
 (158.355/2.29)/kern_baseline #=0.4610044
 #mojave
@@ -280,38 +335,60 @@ Ventura: (158.355/1.78)/ventura_baseline = 0.3631163
 (158.355/1.78)/ventura_baseline #0.3631163
 ```
 
-kern: b - (158.355/2.29) / b * 158.36 * 0.05 = 547.5349
-mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
-antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
-ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  
+  Kern: b - (158.355/2.29) / b * 158.36 * 0.05 = 547.5349
+  
+  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+  
+  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+  
+  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
 
-2) calculate the total cost of meeting the target using that approach
-The total cost of the policy is the same as for the tax because according to the equalmarginal principle, the districts will settle on the least coast way to achieve the reduction amount, which is where we set the tax. 
-This is 255 * 158.355 * .05 = $2019.03
+  
+  **2) calculate the total cost of meeting the target using that approach**
+  
+  The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least coast way to achieve the reduction amount, which is where we set the tax. 
+  
+  This is 255 * 158.355 * .05 = $2019.03
 
-3) calculate the cost to each district
-This is also the same as the costs under the tax. 
-Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
-Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
-Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
-Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  **3) calculate the cost to each district**
+  
+  This is also the same as the costs under the tax. 
+  
+  Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+  
+  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+  
+  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+  
+  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  
+  **4) Tax Revenue:** 
+  
+  There is no tax revenue generated because there is no tax.
+  
+  
 
-4) There is no tax revenue generated because there is no tax. 
-
-4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?
-```{r}
+  **4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?**
+  
+```{r, results='hide'}
 #marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)
 aggMC(455) #282.555
 ```
 
-The cost of the drought, based on reducing water from 500AF to 300 AF to each irrigation district is:
-Kern: 
-Mojave: 
-Antelope: 
-Ventura: 
-We calculated these costs by calculating the cost of reducing from 755 AF to 300 AF and and then subtracting the cost of reducing from 755 AF to 500 AF from that cost. 
+  The cost of the drought, based on reducing water from 500AF to 300 AF to each irrigation district is:
+  
+  Kern: $1195.64
+  
+  Mojave: $720.53
+  
+  Antelope: $957.35
+  
+  Ventura: $1538.21
+  
+  We calculated these costs by calculating the cost of reducing from 755 AF to 300 AF and and then subtracting the cost of reducing from 755 AF to 500 AF from that cost. 
 
-```{r}
+```{r, results='hide'}
 #costs to each district 
 #kern 
 (282.555/2.29 * 282.555 * 0.05) - (158.355/2.29 * 158.36 * 0.05) #1195.638
