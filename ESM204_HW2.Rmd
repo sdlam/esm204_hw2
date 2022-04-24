@@ -217,10 +217,14 @@ district_costs %>%
 ```
 
   
-  4) There will be no tax revenue generated because there is no tax here. 
+  **4) Tax Revenue: **
+  
+  There will be no tax revenue generated because there is no tax here. 
 
   
-  b. Tax on water use. A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.  
+  **b. Tax on water use.** 
+  
+  A single tax is implemented on all water use in each of the four districts, such that water use is reduced to the 500 AF target. Stringency is defined as the magnitude of the tax.  
 
   
   We started by graphing the aggregate of the marginal cost curves for each water district. We did this by finding the slope of the aggregate line.   
@@ -369,6 +373,7 @@ ggplot() +
   
   
 
+  
   **4. A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?**
   
 ```{r, results='hide'}
