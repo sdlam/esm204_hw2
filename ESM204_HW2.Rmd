@@ -400,29 +400,14 @@ aggMC(455) #282.555
 ```{r, results='hide'}
 #costs to each district 
 #kern 
-(282.555/2.29 * 282.555 * 0.05) - (158.355/2.29 * 158.36 * 0.05) #1195.638
+(282.555/2.29 * 282.555 * 0.5) - (158.355/2.29 * 158.36 * 0.5) #1195.638
 #mojave
-(282.555/3.8 * 282.555 * 0.05) - (158.355/3.8 * 158.36 * 0.05) #720.5293
+(282.555/3.8 * 282.555 * 0.5) - (158.355/3.8 * 158.36 * 0.5) #720.5293
 #antelope
-(282.555/2.86 * 282.555 * 0.05) - (158.355/2.86 * 158.36 * 0.05) #957.3467
+(282.555/2.86 * 282.555 * 0.5) - (158.355/2.86 * 158.36 * 0.5) #957.3467
 #ventura
-(282.555/1.78 * 282.555 * 0.05) - (158.355/1.78 * 158.36 * 0.05) #1538.209
+(282.555/1.78 * 282.555 * 0.5) - (158.355/1.78 * 158.36 * 0.5) #1538.209
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -544,7 +529,6 @@ aggMC(455)
 455 * 282.555
 ```
 
-  
   **c. Drought reductions with cap and trade.**
   
   **1) Stringency of the policy**
@@ -568,23 +552,9 @@ aggMC(455)
 (282.555/1.78)/ventura_baseline #0.6479133
 ```
   
-  **2) calculate the total cost of meeting the target using that approach**
-  
-  The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least coast way to achieve the reduction amount, which is where we set the tax. 
-  
-  This is 455 * 282.555 * .5 = $64,281.26
-
   **3) calculate the cost to each district**
   
-  This is also the same as the costs under the tax. 
-  
-  Kern: 158.355/2.29 * 158.36 * 0.5 = 547.5349
-  
-  Mojave: 158.355/3.8 * 158.36 * 0.5 = 329.9618
-  
-  Antelope: 158.355/2.86 * 158.36 * 0.5 = 438.4108
-  
-  Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
+
 
 
 
