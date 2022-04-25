@@ -442,7 +442,7 @@ ventura_cost_603 <- calc_cost(mod_ventura, quantity_abate = 147.735) #these calc
 
 calc_est_603 <- function(lm_mod, quantity_abate) {
   estimated_cost = lm_mod$coefficients * quantity_abate
-  return(estimtated_cost[[1]])
+  return(estimated_cost[[1]])
 }
 
 # Q4, kern abated  0.603 * 150 = 90.45 units, and so on for each district
