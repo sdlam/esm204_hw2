@@ -319,7 +319,7 @@ aggMC(255)
   
   **4) Calculate the tax revenue generated.**
   
-  The tax revenue generated is the entire area of the reduction times the amount of the tax.
+  The tax revenue generated is the entire area of the reduction times the amount of the tax (Q* x T*).
 
   Tax revenue = $40,381.80
 
@@ -368,13 +368,13 @@ ggplot() +
 ```
 
   
-  Kern: b - (158.355/2.29) / b * 158.36 * 0.05 = 547.5349
+  Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349
   
-  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+  Mojave: 158.355/3.8 * 158.36 * 0.5 = 329.9618
   
-  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+  Antelope: 158.355/2.86 * 158.36 * 0.5  = 438.4108
   
-  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
+  Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
 
   
   **2) calculate the total cost of meeting the target using that approach**
