@@ -358,34 +358,34 @@ aggMC(255)
   
   **c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).**
   
-<!--   **1) Stringency of the policy** -->
+  **1) Stringency of the policy**
 
-<!--   Kern:  (158.355/2.29)/kern_baseline = 0.4610044 -->
+  Kern:  (158.355/2.29)/kern_baseline = 0.4610044
 
-<!--   Mojave: (158.355/3.8)/mojave_baseline = 0.2976598 -->
+  Mojave: (158.355/3.8)/mojave_baseline = 0.2976598
 
-<!--   Antelope: (158.355/2.86)/antelope_baseline = 0.2516767 -->
+  Antelope: (158.355/2.86)/antelope_baseline = 0.2516767
 
-<!--   Ventura: (158.355/1.78)/ventura_baseline = 0.3631163 -->
+  Ventura: (158.355/1.78)/ventura_baseline = 0.3631163
 
-<!-- ```{r, results='hide'} -->
-<!-- #kern -->
-<!-- (158.355/2.29)/kern_baseline #=0.4610044 -->
-<!-- #mojave -->
-<!-- (158.355/3.8)/mojave_baseline #0.2976598 -->
-<!-- #antelope -->
-<!-- (158.355/2.86)/antelope_baseline #0.2516767 -->
-<!-- #ventura -->
-<!-- (158.355/1.78)/ventura_baseline #0.3631163 -->
-<!-- ``` -->
+```{r, results='hide'}
+#kern
+(158.355/2.29)/kern_baseline #0.4610044
+#mojave
+(158.355/3.8)/mojave_baseline #0.2976598
+#antelope
+(158.355/2.86)/antelope_baseline #0.2516767
+#ventura
+(158.355/1.78)/ventura_baseline #0.3631163
+```
 
-<!--   Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349 -->
+  Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349
 
-<!--   Mojave: 158.355/3.8 * 158.36 * 0.5 = 329.9618 -->
+  Mojave: 158.355/3.8 * 158.36 * 0.5 = 329.9618
 
-<!--   Antelope: 158.355/2.86 * 158.36 * 0.5  = 438.4108 -->
+  Antelope: 158.355/2.86 * 158.36 * 0.5  = 438.4108
 
-<!--   Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128 -->
+  Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
 
   
   **2) calculate the total cost of meeting the target using that approach**
