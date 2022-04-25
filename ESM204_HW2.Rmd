@@ -275,72 +275,70 @@ aggMC(255)
   
   **2) calculate the total cost of meeting the target using that approach**
   
-  The total cost of the policy is the area under the aggregate line up to the reduction amount. 
+  The total cost of the policy is the area under the aggregate line up to the reduction amount plus the quanity used times the marginal cost. 
   
-  This is (255 * 158.355) * .05 = $2019.03
-
+  This is (255 * 158.355 * .05) + (500 * 158.355) = $ 99,367.76
+  
 ```{r, results='hide'}
-255*158.355*.05
+(255 * 158.355 * .5) + (500 * 158.355)
 ```
-
+ 
   
-  **3) calculate the cost to each district** I think we need to change this too 
+  **3) calculate the cost to each district**
   
   The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36) plus the cost of water used (tax*amount of water). 
   
   Kern: 
   Cost of tax * amount of water: (150 - (158.355/2.29)) * 158.36 = $12,803.30
   
-  Cost of abatement: 158.355/2.29 * 158.36 * 0.5 = $5,475.349
+  Cost of abatement: 158.355/2.29 * 158.355 * 0.5 = $5,475.349
   
   Total cost: $18,278.65
   
   Mojave: 
   Cost of tax * amount of water: (140 - (158.355/3.8)) * 158.36 = 15,571.16
   
-  Cost of abatement: 158.355/3.8 * 158.36 * 0.5  = 3,299.618
+  Cost of abatement: 158.355/3.8 * 158.355 * 0.5  = 3,299.618
   
   Total cost: $18,870.78
   
   Antelope: 
   Cost of tax * amount of water: (220 - (158.355/2.86)) * 158.36 = 26,070.98
   
-  Cost of abatement: 158.355/2.86 * 158.36 * 0.5 = 4,384.108
+  Cost of abatement: 158.355/2.86 * 158.355 * 0.5 = 4,384.108
   
   Total cost: $30,455.09
   
   Ventura: 
   Cost of tax * amount of water: (245 - (158.355/1.78)) * 158.36 = 24,709.94
   
-  Cost of abatement: 158.355/1.78 * 158.36 * 0.5 = 7,044.129
+  Cost of abatement: 158.355/1.78 * 158.355 * 0.5 = 7,044.129
   
   Total cost: $31,754.07
 
 ```{r, results='hide'}
 #kern 
-158.355/2.29 * 158.36 * 0.5
-(150 - (158.355/2.29)) * 158.36
-
-(158.355/2.29 * 158.36 * 0.5) + ((150 - (158.355/2.29)) * 158.36)
+158.355/2.29 * 158.355 * 0.5
+(150 - (158.355/2.29)) * 158.355
+(158.355/2.29 * 158.355 * 0.5) + ((150 - (158.355/2.29)) * 158.355)
 
 #mojave
-158.355/3.8 * 158.36 * 0.5
-(140 - (158.355/3.8)) * 158.36
-(158.355/3.8 * 158.36 * 0.5) + (140 - (158.355/3.8)) * 158.36
+158.355/3.8 * 158.355 * 0.5
+(140 - (158.355/3.8)) * 158.355
+(158.355/3.8 * 158.355 * 0.5) + (140 - (158.355/3.8)) * 158.355
 
 #antelope
-158.355/2.86 * 158.36 * 0.5
-(220 - (158.355/2.86)) * 158.36
-(158.355/2.86 * 158.36 * 0.5) + ((220 - (158.355/2.86)) * 158.36)
+158.355/2.86 * 158.355 * 0.5
+(220 - (158.355/2.86)) * 158.355
+(158.355/2.86 * 158.355 * 0.5) + ((220 - (158.355/2.86)) * 158.355)
 
 #ventura
-158.355/1.78 * 158.36 * 0.5
-(245 - (158.355/1.78)) * 158.36
-(158.355/1.78 * 158.36 * 0.5) + (245 - (158.355/1.78)) * 158.36
+158.355/1.78 * 158.355 * 0.5
+(245 - (158.355/1.78)) * 158.355
+(158.355/1.78 * 158.355 * 0.5) + (245 - (158.355/1.78)) * 158.355
 
-#Summing Q's
-547.5349 +  329.9618 +  438.4108 + 704.4129 
-2020.32
+#Summing costs
+8278.65 + 18870.78 + 30455.09 + 31754.07 #99358.59
 ```
 
   
@@ -350,12 +348,11 @@ aggMC(255)
 
   Tax revenue = $40,381.80
 
-```{r}
+```{r, results= 'hide'}
 #Tax Revenue: 
 255 * 158.36
 ```
 
-  
   **c. Cap and trade. Cap water use as in part (a), but after those caps are set, allow trade across districts. How much water is used by each district after trade? Stringency is the same as in part (a).**
   
   **1) Stringency of the policy**
@@ -379,33 +376,36 @@ aggMC(255)
 (158.355/1.78)/ventura_baseline #0.3631163
 ```
   
-  Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349
-  
-  Mojave: 158.355/3.8 * 158.36 * 0.5 = 329.9618
-  
-  Antelope: 158.355/2.86 * 158.36 * 0.5  = 438.4108
-  
-  Ventura: 158.355/1.78 * 158.36 * 0.5 = 704.4128
-
-  
   **2) calculate the total cost of meeting the target using that approach**
   
   The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least cost way to achieve the reduction amount, which is where we set the tax. 
   
-  This is 255 * 158.355 * .05 = $2019.03
 
   **3) calculate the cost to each district**
+  The cost to each district is the area under the marginal cost curve at the price of the equimarginal principle plus or minus the difference between the marginal price of abatement and the equimarginal price for each district before trade. 
   
-  This is also the same as the costs under the tax. 
+Kern: $2,553.699
+
+Mojave: $3,503.216
+
+Antelope: $4,883.542
+
+Ventura: $4,122.479
   
-  Kern: 158.355/2.29 * 158.36 * 0.05 = 547.5349
+```{r, results = 'hide'}
+#Kern
+(158.355/2.29 * 158.36 * 0.5) - ((69.15-50.7)*(158.355))
   
-  Mojave: 158.355/3.8 * 158.36 * 0.05 * 0.05 = 329.9618
+#Mojave
+(158.355/3.8 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-180.4252)*0.5)
   
-  Antelope: 158.355/2.86 * 158.36 * 0.05 * 0.05 = 438.4108
+#Antelope: 
+(158.355/2.86 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-212.4942)*0.5)
   
-  Ventura: 158.355/1.78 * 158.36 * 0.05 = 704.4128
-  
+#Ventura: 
+(158.355/1.78 * 158.36 * 0.5) - ((69.15-50.7)*(158.355))
+```
+
   **4) Tax Revenue:** 
   
   There is no tax revenue generated because there is no tax.
@@ -441,6 +441,17 @@ mojave_cost_603 <- calc_cost(mod_mojave, quantity_abate = 84.42)
 antelope_cost_603 <- calc_cost(mod_antelope, quantity_abate = 132.66) 
 ventura_cost_603 <- calc_cost(mod_ventura, quantity_abate = 147.735) #these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
 
+calc_est_603 <- function(lm_mod, quantity_abate) {
+  estimated_cost = lm_mod$coefficients * quantity_abate
+  return(estimtated_cost[[1]])
+}
+
+# Q4, kern abated  0.603 * 150 = 90.45 units, and so on for each district
+calc_est_603(mod_kern, quantity_abate = 90.45) 
+calc_est_603(mod_mojave, quantity_abate = 84.42) 
+calc_est_603(mod_antelope, quantity_abate = 132.66) 
+calc_est_603(mod_ventura, quantity_abate = 147.735) 
+
 district_costs_603 <- tibble(kern_cost_603, mojave_cost_603, antelope_cost_603, ventura_cost_603) #put costs into nice table
 district_costs_603 %>% 
   kableExtra::kable(col.names = c("Kern",
@@ -450,7 +461,6 @@ district_costs_603 %>%
 
 
   **Drought Reduction with tax** 
-  **Stringency of the policy**
   
   The tax should be set at $282.56 for a reduction of 455 AF. 
   
@@ -486,30 +496,31 @@ aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 
 
 ```
 
-  **c. Drought reductions with cap and trade.**
+  **Drought reductions with cap and trade.**
+  **Cost to each district**
   
-  **1) Stringency of the policy**
-  
-  Kern: (282.555/2.29)/kern_baseline = 0.8225764
-  
-  Mojave: (282.555/3.8)/mojave_baseline = 0.5311184
-  
-  Antelope: (282.555/2.86)/antelope_baseline = 0.4490702
-  
-  Ventura: (282.555/1.78)/ventura_baseline = 0.6479133
+Kern: $22,644.87
 
-```{r, results='hide'}
-#kern
-(282.555/2.29)/kern_baseline #0.8225764
-#mojave
-(282.555/3.8)/mojave_baseline #0.5311184
-#antelope
-(282.555/2.86)/antelope_baseline #0.4490702
-#ventura
-(282.555/1.78)/ventura_baseline #0.6479133
+Mojave: $9,562.764
+
+Antelope: $13,311.26
+
+Ventura: $27,639.36
+
+```{r}
+#Kern
+(282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
+  
+#Mojave
+(282.555/3.8 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-180.4252)*0.5)
+  
+#Antelope: 
+(282.555/2.86 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-212.4942)*0.5)
+  
+#Ventura: 
+(282.555/1.78 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
 ```
   
-  **3) calculate the cost to each district**
   
 
 
