@@ -277,7 +277,7 @@ aggMC(255)
   
   The total cost of the policy is the area under the aggregate line up to the reduction amount. 
   
-  This is 255 * 158.355 * .05 = $2019.03
+  This is (255 * 158.355) * .05 = $2019.03
 
 ```{r, results='hide'}
 255*158.355*.05
@@ -491,7 +491,7 @@ aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 
 
 ```{r, results='hide'}
 #kern
-(282.555/2.29)/kern_baseline #=0.8225764
+(282.555/2.29)/kern_baseline #0.8225764
 #mojave
 (282.555/3.8)/mojave_baseline #0.5311184
 #antelope
