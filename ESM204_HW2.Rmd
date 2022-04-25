@@ -205,11 +205,22 @@ calc_cost <- function(lm_mod, quantity_abate) {
   total_cost = 0.5 * quantity_abate * estimated_cost
   return(total_cost[[1]])
 }
+
+calc_est <- function(lm_mod, quantity_abate) {
+  estimated_cost = lm_mod$coefficients * quantity_abate
+  return(estimated_cost[[1]])
+}
+
 # Q3a, kern abated 0.338 * 150 = 50.7 units
 kern_cost <- calc_cost(mod_kern, quantity_abate = 50.7) 
 mojave_cost <- calc_cost(mod_mojave, quantity_abate = 47.43) 
 antelope_cost <- calc_cost(mod_antelope, quantity_abate = 74.36) 
 ventura_cost <- calc_cost(mod_ventura, quantity_abate = 82.81) #these calculations are the same thing as if we calculated the area under the curve using the area of a triangle
+
+kern_est <- calc_est(mod_kern, quantity_abate = 50.7) 
+mojave_est <- calc_est(mod_mojave, quantity_abate = 47.43) 
+antelope_est <- calc_est(mod_antelope, quantity_abate = 74.36) 
+ventura_est <- calc_est(mod_ventura, quantity_abate = 82.81)
 
 district_costs <- tibble(kern_cost, mojave_cost, antelope_cost, ventura_cost) #put costs into nice table
 district_costs %>% 
@@ -300,7 +311,7 @@ aggMC(255)
   
   Cost of abatement: 158.355/3.8 * 158.355 * 0.5  = 3,299.618
   
-  (*Total cost: $18,870.78*
+  *Total cost: $18,870.78*
   
   Antelope: 
   Cost of tax * amount of water: (220 - (158.355/2.86)) * 158.36 = 26,070.98
@@ -378,23 +389,27 @@ aggMC(255)
 
   **2) calculate the total cost of meeting the target using that approach**
   
-  The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least cost way to achieve the reduction amount, which is where we set the tax. 
+  The total cost of the cap with trade policy is $20,190.26
+
+```{r, results='hide'}
+158.355 * 255 * .5
+```
   
 
   **3) calculate the cost to each district**
   The cost to each district is the area under the marginal cost curve at the price of the equimarginal principle plus or minus the difference between the marginal price of abatement and the equimarginal price for each district before trade. 
   
-Kern: $2,553.699
+Kern: $5,083.878
 
 Mojave: $3,503.216
 
 Antelope: $4,883.542
 
-Ventura: $4,122.479
+Ventura: $6,940.063
   
 ```{r, results = 'hide'}
 #Kern
-(158.355/2.29 * 158.36 * 0.5) - ((69.15-50.7)*(158.355))
+(158.355/2.29 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-kern_est)*.5)
   
 #Mojave
 (158.355/3.8 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-180.4252)*0.5)
@@ -403,7 +418,7 @@ Ventura: $4,122.479
 (158.355/2.86 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-212.4942)*0.5)
   
 #Ventura: 
-(158.355/1.78 * 158.36 * 0.5) - ((69.15-50.7)*(158.355))
+(158.355/1.78 * 158.36 * 0.5) - ((69.15-50.7)*(158.355-ventura_est)*0.5)
 ```
 
   **4) Tax Revenue:** 
@@ -424,16 +439,11 @@ Ventura: $4,122.479
   p = 0.603
   
   **Cost to each district:**
-```{r, results = 'hide'}
+```{r, results='hide'}
 # A function to compute the cost for a districts abatement given the abatement number
 quantity_abate = 50
 lm_mod = mod_kern
-# defining the function
-calc_cost <- function(lm_mod, quantity_abate) {
-  estimated_cost = lm_mod$coefficients * quantity_abate
-  total_cost = 0.5 * quantity_abate * estimated_cost
-  return(total_cost[[1]])
-}
+
 # Q4, kern abated  0.603 * 150 = 90.45 units, and so on for each district
 kern_cost_603 <- calc_cost(mod_kern, quantity_abate = 90.45) 
 mojave_cost_603 <- calc_cost(mod_mojave, quantity_abate = 84.42) 
@@ -451,13 +461,16 @@ calc_est_603(mod_mojave, quantity_abate = 84.42)
 calc_est_603(mod_antelope, quantity_abate = 132.66) 
 calc_est_603(mod_ventura, quantity_abate = 147.735) 
 
+
+```
+
+```{r}
 district_costs_603 <- tibble(kern_cost_603, mojave_cost_603, antelope_cost_603, ventura_cost_603) #put costs into nice table
 district_costs_603 %>% 
   kableExtra::kable(col.names = c("Kern",
                                   "Mojave", "Antelope", "Ventura")) %>% 
    kable_styling(full_width = FALSE)
 ```
-
 
   **Drought Reduction with tax** 
   
@@ -497,20 +510,20 @@ aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 
 ```
 
   **Drought reductions with cap and trade.**
-    
-    **Cost to each district**
   
-Kern: $22,644.87
+  **Cost to each district**
+  
+Kern: $18,130.55
 
 Mojave: $9,562.764
 
 Antelope: $13,311.26
 
-Ventura: $27,639.36
+Ventura: $22,612.29
 
 ```{r, results='hide'}
 #Kern
-(282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
+(282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555-206.8024)*.5)
   
 #Mojave
 (282.555/3.8 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-180.4252)*0.5)
@@ -519,7 +532,7 @@ Ventura: $27,639.36
 (282.555/2.86 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-212.4942)*0.5)
   
 #Ventura: 
-(282.555/1.78 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
+(282.555/1.78 * 282.555 * 0.5) + ((69.15-50.7)*(282.555-262.3839)*.5)
 ```
   
   
