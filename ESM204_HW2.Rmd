@@ -267,7 +267,7 @@ aggMC(255)
   
   **3) calculate the cost to each district** I think we need to change this too 
   
-  The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36). 
+  The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36) plus the cost of water used (tax*amount of water). 
   
   Kern: 
   Cost of tax * amount of water: (150 - (158.355/2.29)) * 158.36 = $12,803.30
@@ -366,7 +366,6 @@ ggplot() +
 #ventura
 (158.355/1.78)/ventura_baseline #0.3631163
 ```
-
   
   Kern: b - (158.355/2.29) / b * 158.36 * 0.5 = 547.5349
   
@@ -379,7 +378,7 @@ ggplot() +
   
   **2) calculate the total cost of meeting the target using that approach**
   
-  The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least coast way to achieve the reduction amount, which is where we set the tax. 
+  The total cost of the policy is the same as for the tax because according to the equal marginal principle, the districts will settle on the least cost way to achieve the reduction amount, which is where we set the tax. 
   
   This is 255 * 158.355 * .05 = $2019.03
 
