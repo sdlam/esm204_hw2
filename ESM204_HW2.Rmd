@@ -293,28 +293,28 @@ aggMC(255)
   
   Cost of abatement: 158.355/2.29 * 158.36 * 0.5 = $5,475.349
   
-  Total cost: $18,278.65
+  *Total cost: $18,278.65*
   
   Mojave: 
   Cost of tax * amount of water: (140 - (158.355/3.8)) * 158.36 = 15,571.16
   
   Cost of abatement: 158.355/3.8 * 158.36 * 0.5  = 3,299.618
   
-  Total cost: $18,870.78
+  (*Total cost: $18,870.78*
   
   Antelope: 
   Cost of tax * amount of water: (220 - (158.355/2.86)) * 158.36 = 26,070.98
   
   Cost of abatement: 158.355/2.86 * 158.36 * 0.5 = 4,384.108
   
-  Total cost: $30,455.09
+  *Total cost: $30,455.09*
   
   Ventura: 
   Cost of tax * amount of water: (245 - (158.355/1.78)) * 158.36 = 24,709.94
   
   Cost of abatement: 158.355/1.78 * 158.36 * 0.5 = 7,044.129
   
-  Total cost: $31,754.07
+  *Total cost: $31,754.07*
 
 ```{r, results='hide'}
 #kern 
