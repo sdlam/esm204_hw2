@@ -332,7 +332,11 @@ aggMC(255)</code></pre>
 <p>This is (255 * 158.355) * .05 = $2019.03</p>
 <pre class="r"><code>255*158.355*.05</code></pre>
 <p><strong>3) calculate the cost to each district</strong> I think we need to change this too</p>
+<<<<<<< HEAD
+<p>The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36).</p>
+=======
 <p>The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($158.36) plus the cost of water used (tax*amount of water).</p>
+<<<<<<< HEAD
 <p>Kern: Cost of tax * amount of water: (150 - (158.355/2.29)) * 158.36 = $12,803.30</p>
 <p>Cost of abatement: 158.355/2.29 * 158.36 * 0.5 = $5,475.349</p>
 <p>Total cost: $18,278.65</p>
@@ -345,6 +349,13 @@ aggMC(255)</code></pre>
 <p>Ventura: Cost of tax * amount of water: (245 - (158.355/1.78)) * 158.36 = 24,709.94</p>
 <p>Cost of abatement: 158.355/1.78 * 158.36 * 0.5 = 7,044.129</p>
 <p>Total cost: $31,754.07</p>
+=======
+>>>>>>> c19227c2ae70da2254eb7e19506683829e03a638
+<p>Kern: Cost of tax * amount of water: (150 - (158.355/2.29)) * 158.36 = $12,803.30 Cost of abatement: 158.355/2.29 * 158.36 * 0.5 = $5,475.349 Total cost: $18,278.65</p>
+<p>Mojave: Cost of tax * amount of water: (140 - (158.355/3.8)) * 158.36 = 15,571.16 Cost of abatement: 158.355/3.8 * 158.36 * 0.5 = 3,299.618 Total cost: $18,870.78</p>
+<p>Antelope: Cost of tax * amount of water: (220 - (158.355/2.86)) * 158.36 = 26,070.98 Cost of abatement: 158.355/2.86 * 158.36 * 0.5 = 4,384.108 Total cost: $30,455.09</p>
+<p>Ventura: Cost of tax * amount of water: (245 - (158.355/1.78)) * 158.36 = 24,709.94 Cost of abatement: 158.355/1.78 * 158.36 * 0.5 = 7,044.129 Total cost: $31,754.07</p>
+>>>>>>> a8b0870f4562bb07f7ab542ee06c28c28514a36c
 <pre class="r"><code>#kern 
 158.355/2.29 * 158.36 * 0.5
 (150 - (158.355/2.29)) * 158.36
@@ -370,7 +381,7 @@ aggMC(255)</code></pre>
 547.5349 +  329.9618 +  438.4108 + 704.4129 
 2020.32</code></pre>
 <p><strong>4) Calculate the tax revenue generated.</strong></p>
-<p>The tax revenue generated is the entire area of the reduction times the amount of the tax.</p>
+<p>The tax revenue generated is the entire area of the reduction times the amount of the tax (Q* x T*).</p>
 <p>Tax revenue = $40,381.80</p>
 <pre class="r"><code>#Tax Revenue: 
 255 * 158.36</code></pre>
@@ -404,11 +415,39 @@ aggMC(255)</code></pre>
 <div id="water-reduction-after-drought" class="section level4">
 <h4>4. Water reduction after drought</h4>
 <p><strong>A severe drought hits California, and it is necessary to reduce water use from 500 AF down to 300 AF. Your job is to estimate the cost of the drought (i.e., the cost of reducing water use from 500 AF to 300 AF) to each irrigation district under each policy. Considering the entire jump from status quo (755 AF) to the drought (300 AF), which policy is preferred by each irrigation district? How does your answer depend on how rights are allocated to each district (in policies (a) and (c))?</strong></p>
+<<<<<<< HEAD
+<pre class="r"><code>#marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)
+aggMC(455) #282.555</code></pre>
+<p>The cost of the drought, based on reducing water from 500AF to 300 AF to each irrigation district is:</p>
+<p>Kern: $1195.64</p>
+<p>Mojave: $720.53</p>
+<p>Antelope: $957.35</p>
+<p>Ventura: $1538.21</p>
+<p>We calculated these costs by calculating the cost of reducing from 755 AF to 300 AF and and then subtracting the cost of reducing from 755 AF to 500 AF from that cost.</p>
+<pre class="r"><code>#costs to each district 
+#kern 
+(282.555/2.29 * 282.555 * 0.5) - (158.355/2.29 * 158.36 * 0.5) #1195.638
+#mojave
+(282.555/3.8 * 282.555 * 0.5) - (158.355/3.8 * 158.36 * 0.5) #720.5293
+#antelope
+(282.555/2.86 * 282.555 * 0.5) - (158.355/2.86 * 158.36 * 0.5) #957.3467
+#ventura
+(282.555/1.78 * 282.555 * 0.5) - (158.355/1.78 * 158.36 * 0.5) #1538.209</code></pre>
+<p><strong>Drought Reduction Cap without trade.</strong></p>
+<p><strong>1) Stringency of the policy</strong></p>
+<p>755-300 = 455.</p>
+<p>p(150) + p(140)+ p(220) + p(245) = 455</p>
+<p>p = 0.603</p>
+<p><strong>2) Total cost of meeting the target:</strong></p>
+<p>$2938.55 + $4278.78 + $7900.53 + $6089.61 = $21207.47</p>
+<p><strong>3) Cost to each district:</strong></p>
+=======
 <p><strong>Drought Reduction Cap without trade.</strong> <strong>Stringency of the policy</strong></p>
 <p>755-300 = 455.</p>
 <p>p(150) + p(140)+ p(220) + p(245) = 455</p>
 <p>p = 0.603</p>
 <p><strong>Cost to each district:</strong></p>
+>>>>>>> c19227c2ae70da2254eb7e19506683829e03a638
 <pre class="r"><code># A function to compute the cost for a districts abatement given the abatement number
 quantity_abate = 50
 lm_mod = mod_kern
@@ -418,7 +457,11 @@ calc_cost &lt;- function(lm_mod, quantity_abate) {
   total_cost = 0.5 * quantity_abate * estimated_cost
   return(total_cost[[1]])
 }
+<<<<<<< HEAD
+# Q4, kern abated  0.603 * 150 = 50.7 units
+=======
 # Q4, kern abated  0.603 * 150 = 90.45 units, and so on for each district
+>>>>>>> c19227c2ae70da2254eb7e19506683829e03a638
 kern_cost_603 &lt;- calc_cost(mod_kern, quantity_abate = 90.45) 
 mojave_cost_603 &lt;- calc_cost(mod_mojave, quantity_abate = 84.42) 
 antelope_cost_603 &lt;- calc_cost(mod_antelope, quantity_abate = 132.66) 
@@ -463,6 +506,39 @@ Ventura
 </tr>
 </tbody>
 </table>
+<<<<<<< HEAD
+<p><strong>Drought Reduction with tax</strong></p>
+<p><strong>1) Stringency of the policy</strong></p>
+<p>The tax should be set at $282.56 for a reduction of 455 AF.</p>
+<pre class="r"><code>aggMC &lt;- function(x){
+  return(0.621*x)
+}
+aggMC(455)</code></pre>
+<p><strong>2) calculate the total cost of meeting the target using that approach</strong></p>
+<p>The total cost of the policy is the area under the aggregate line up to the reduction amount.</p>
+<p>This is 455 * 282.555 * .05 = $64,281.26</p>
+<pre class="r"><code>455*282.555*.5</code></pre>
+<p><strong>3) calculate the cost to each district</strong></p>
+<p>The cost to each district is the area under the marginal cost curve for each district at the amount of the tax ($282.56).</p>
+<p>Kern: 282.555/2.29 * 282.555 * 0.5 = 17431.73</p>
+<p>Mojave: 282.555/3.8 * 282.555 * 0.5 * 0.05 = 10504.91</p>
+<p>Antelope: 282.555/2.86 * 282.555 * 0.5 * 0.05 = 13957.57</p>
+<p>Ventura: 282.555/1.78 * 282.555 * 0.5 = 22426.22</p>
+<pre class="r"><code>#kern 
+282.555/2.29 * 282.555 * 0.5
+#mojave
+282.555/3.8 * 282.555 * 0.5
+#antelope
+282.555/2.86 * 282.555 * 0.5
+#ventura
+282.555/1.78 * 282.555 * 0.5</code></pre>
+<p><strong>4) Calculate the tax revenue generated.</strong></p>
+<p>The tax revenue generated is the entire area of the reduction times the amount of the tax.</p>
+<p>Tax revenue = $128,562.50</p>
+<pre class="r"><code>#Tax Revenue: 
+455 * 282.555</code></pre>
+<pre><code>## [1] 128562.5</code></pre>
+=======
 <p><strong>Drought Reduction with tax</strong> <strong>Stringency of the policy</strong></p>
 <p>The tax should be set at $282.56 for a reduction of 455 AF.</p>
 <pre class="r"><code>aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)</code></pre>
@@ -481,6 +557,7 @@ Ventura
 
 #ventura
 (282.555/1.78 * 282.555 * 0.5) + ((245 - (282.555/1.78)) * 282.555)</code></pre>
+>>>>>>> c19227c2ae70da2254eb7e19506683829e03a638
 <p><strong>c. Drought reductions with cap and trade.</strong></p>
 <p><strong>1) Stringency of the policy</strong></p>
 <p>Kern: (282.555/2.29)/kern_baseline = 0.8225764</p>
