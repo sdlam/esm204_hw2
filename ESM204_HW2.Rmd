@@ -424,7 +424,7 @@ Ventura: $4,122.479
   p = 0.603
   
   **Cost to each district:**
-```{r}
+```{r, results = 'hide'}
 # A function to compute the cost for a districts abatement given the abatement number
 quantity_abate = 50
 lm_mod = mod_kern
@@ -468,6 +468,7 @@ aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 
 ```
 
   **3) calculate the cost to each district**
+  
   Kern: 
   Total cost: $24,951.52
   
@@ -496,7 +497,8 @@ aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 
 ```
 
   **Drought reductions with cap and trade.**
-  **Cost to each district**
+    
+    **Cost to each district**
   
 Kern: $22,644.87
 
@@ -506,7 +508,7 @@ Antelope: $13,311.26
 
 Ventura: $27,639.36
 
-```{r}
+```{r, results='hide'}
 #Kern
 (282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
   
@@ -521,7 +523,7 @@ Ventura: $27,639.36
 ```
   
   
-
+Considering a reduction in water use from 755 to 300 AF, the tax scenario is the most expensive option for all districts. While the cap with trade policy is the lowest total cost option, both Kern and Ventura would prefer a cap without trade policy that would cost them less overall. However Mojave and Antelope would prefer a cap with trade policy as that is the least cost option for those districts.These preferences are based on an initial cap of equal proportion of reduction. Allocating water use limits at different initial proportions, either through grandfathering or another method, would result in different preferred scenarios for each district. 
 
 
 

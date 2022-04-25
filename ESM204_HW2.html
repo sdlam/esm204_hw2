@@ -436,57 +436,21 @@ calc_est_603 &lt;- function(lm_mod, quantity_abate) {
 }
 
 # Q4, kern abated  0.603 * 150 = 90.45 units, and so on for each district
-calc_est_603(mod_kern, quantity_abate = 90.45) </code></pre>
-<pre><code>## [1] 206.8024</code></pre>
-<pre class="r"><code>calc_est_603(mod_mojave, quantity_abate = 84.42) </code></pre>
-<pre><code>## [1] 321.1363</code></pre>
-<pre class="r"><code>calc_est_603(mod_antelope, quantity_abate = 132.66) </code></pre>
-<pre><code>## [1] 379.0946</code></pre>
-<pre class="r"><code>calc_est_603(mod_ventura, quantity_abate = 147.735) </code></pre>
-<pre><code>## [1] 262.3839</code></pre>
-<pre class="r"><code>district_costs_603 &lt;- tibble(kern_cost_603, mojave_cost_603, antelope_cost_603, ventura_cost_603) #put costs into nice table
+calc_est_603(mod_kern, quantity_abate = 90.45) 
+calc_est_603(mod_mojave, quantity_abate = 84.42) 
+calc_est_603(mod_antelope, quantity_abate = 132.66) 
+calc_est_603(mod_ventura, quantity_abate = 147.735) 
+
+district_costs_603 &lt;- tibble(kern_cost_603, mojave_cost_603, antelope_cost_603, ventura_cost_603) #put costs into nice table
 district_costs_603 %&gt;% 
   kableExtra::kable(col.names = c(&quot;Kern&quot;,
                                   &quot;Mojave&quot;, &quot;Antelope&quot;, &quot;Ventura&quot;)) %&gt;% 
    kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Kern
-</th>
-<th style="text-align:right;">
-Mojave
-</th>
-<th style="text-align:right;">
-Antelope
-</th>
-<th style="text-align:right;">
-Ventura
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-9352.641
-</td>
-<td style="text-align:right;">
-13555.16
-</td>
-<td style="text-align:right;">
-25145.35
-</td>
-<td style="text-align:right;">
-19381.64
-</td>
-</tr>
-</tbody>
-</table>
 <p><strong>Drought Reduction with tax</strong></p>
 <p>The tax should be set at $282.56 for a reduction of 455 AF.</p>
 <pre class="r"><code>aggMC(455) #marginal cost of water reduction when use is limited to 300 AF (455 AF reduction)</code></pre>
-<p><strong>3) calculate the cost to each district</strong> Kern: Total cost: $24,951.52</p>
+<p><strong>3) calculate the cost to each district</strong></p>
+<p>Kern: Total cost: $24,951.52</p>
 <p>Mojave: Total cost: $24,951.52</p>
 <p>Antelope: Total cost: $48,204.53</p>
 <p>Ventura: Total cost: $46,799.76</p>
@@ -501,23 +465,24 @@ Ventura
 
 #ventura
 (282.555/1.78 * 282.555 * 0.5) + ((245 - (282.555/1.78)) * 282.555)</code></pre>
-<p><strong>Drought reductions with cap and trade.</strong> <strong>Cost to each district</strong></p>
+<p><strong>Drought reductions with cap and trade.</strong></p>
+<pre><code>**Cost to each district**</code></pre>
 <p>Kern: $22,644.87</p>
 <p>Mojave: $9,562.764</p>
 <p>Antelope: $13,311.26</p>
 <p>Ventura: $27,639.36</p>
 <pre class="r"><code>#Kern
-(282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))</code></pre>
-<pre><code>## [1] 22644.87</code></pre>
-<pre class="r"><code>#Mojave
-(282.555/3.8 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-180.4252)*0.5)</code></pre>
-<pre><code>## [1] 9562.764</code></pre>
-<pre class="r"><code>#Antelope: 
-(282.555/2.86 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-212.4942)*0.5)</code></pre>
-<pre><code>## [1] 13311.26</code></pre>
-<pre class="r"><code>#Ventura: 
+(282.555/2.29 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))
+  
+#Mojave
+(282.555/3.8 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-180.4252)*0.5)
+  
+#Antelope: 
+(282.555/2.86 * 282.555 * 0.5) - ((69.15-50.7)*(282.555-212.4942)*0.5)
+  
+#Ventura: 
 (282.555/1.78 * 282.555 * 0.5) + ((69.15-50.7)*(282.555))</code></pre>
-<pre><code>## [1] 27639.36</code></pre>
+<p>Considering a reduction in water use from 755 to 300 AF, the tax scenario is the most expensive option for all districts. While the cap with trade policy is the lowest total cost option, both Kern and Ventura would prefer a cap without trade policy that would cost them less overall. However Mojave and Antelope would prefer a cap with trade policy as that is the least cost option for those districts.These preferences are based on an initial cap of equal proportion of reduction. Allocating water use limits at different initial proportions, either through grandfathering or another method, would result in different preferred scenarios for each district.</p>
 </div>
 </div>
 
